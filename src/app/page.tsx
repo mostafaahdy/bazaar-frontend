@@ -1,101 +1,91 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState, useEffect } from 'react';
+import HeroSlider from '@/components/home/HeroSlider';
+import FlashDeals from '@/components/home/FlashDeals';
+import CategoriesGrid from '@/components/home/CategoriesGrid';
+import ProductGrid from '@/components/home/ProductGrid';
+import ValueProps from '@/components/home/ValueProps';
+import PromoBanner from '@/components/home/PromoBanner';
+import { TRENDING_PRODUCTS, BEST_SELLER_PRODUCTS, TOP_ELECTRONICS } from '@/lib/mockData';
+import { productService } from '@/services/productService';
+import type { Product } from '@/lib/types';
+
+export default function HomePage() {
+  const [trending, setTrending] = useState<Product[]>(TRENDING_PRODUCTS);
+  const [bestSellers, setBestSellers] = useState<Product[]>(BEST_SELLER_PRODUCTS);
+  const [topElectronics, setTopElectronics] = useState<Product[]>(TOP_ELECTRONICS);
+
+  useEffect(() => {
+    // 1. Fetch live trending & best seller products
+    productService
+      .getProducts({ sortBy: 'popular', pageSize: 8 })
+      .then((res) => {
+        if (res.items && res.items.length > 0) {
+          setTrending(res.items.slice(0, 4));
+          setBestSellers(res.items.slice(2, 6));
+        }
+      })
+      .catch((err) => console.warn('[HomePage] Using fallback products:', err));
+
+    // 2. Fetch live electronics
+    productService
+      .getProducts({ categorySlug: 'electronics', pageSize: 4 })
+      .then((res) => {
+        if (res.items && res.items.length > 0) {
+          setTopElectronics(res.items);
+        }
+      })
+      .catch((err) => console.warn('[HomePage] Using fallback electronics:', err));
+  }, []);
+
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+    <>
+      {/* 1. Hero Slider with dynamic CTAs ───────────────── */}
+      <HeroSlider />
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      {/* 2. Value Proposition Badges (4-card banner) ────── */}
+      <ValueProps />
+
+      {/* 3. Flash Deals with live countdown rail ────────── */}
+      <FlashDeals />
+
+      {/* 4. Category Showcase Grid ──────────────────────── */}
+      <CategoriesGrid />
+
+      {/* 5. Curated Grid: Trending in Cairo ─────────────── */}
+      <ProductGrid
+        title="Trending in Cairo"
+        subtitle="Fastest selling items across the capital this week"
+        products={trending}
+        viewAllHref="/products?sort=popular"
+        badge="🔥 High Demand"
+      />
+
+      {/* 6. Curated Grid: Best Sellers ──────────────────── */}
+      <div className="bg-zinc-100/60 dark:bg-zinc-950/40 border-y border-zinc-200/50 dark:border-zinc-800/60">
+        <ProductGrid
+          title="Best Sellers"
+          subtitle="Top customer rated products with 1,000+ verified purchases"
+          products={bestSellers}
+          viewAllHref="/products?sort=rating"
+          badge="🏆 Customer Choice"
+        />
+      </div>
+
+      {/* 7. Curated Grid: Top Electronics ───────────────── */}
+      <div className="bg-white dark:bg-zinc-900">
+        <ProductGrid
+          title="Top Electronics & Gadgets"
+          subtitle="Smartphones, laptops, noise-canceling audio & accessories"
+          products={topElectronics}
+          viewAllHref="/products?category=electronics"
+          badge="⚡ Tech Hub"
+        />
+      </div>
+
+      {/* 8. Promotional Banner ──────────────────────────── */}
+      <PromoBanner />
+    </>
   );
 }
