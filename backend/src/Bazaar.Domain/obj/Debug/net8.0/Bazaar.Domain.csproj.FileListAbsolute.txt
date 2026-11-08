@@ -1,0 +1,11 @@
+D:\taskk\backend\src\Bazaar.Domain\bin\Debug\net8.0\Bazaar.Domain.deps.json
+D:\taskk\backend\src\Bazaar.Domain\bin\Debug\net8.0\Bazaar.Domain.dll
+D:\taskk\backend\src\Bazaar.Domain\bin\Debug\net8.0\Bazaar.Domain.pdb
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.AssemblyInfoInputs.cache
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.AssemblyInfo.cs
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.csproj.CoreCompileInputs.cache
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.dll
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\refint\Bazaar.Domain.dll
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\Bazaar.Domain.pdb
+D:\taskk\backend\src\Bazaar.Domain\obj\Debug\net8.0\ref\Bazaar.Domain.dll

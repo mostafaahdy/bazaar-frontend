@@ -1,0 +1,15 @@
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.csproj.AssemblyReference.cache
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.AssemblyInfoInputs.cache
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.AssemblyInfo.cs
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.csproj.CoreCompileInputs.cache
+D:\taskk\backend\src\Bazaar.Application\bin\Debug\net8.0\Bazaar.Application.deps.json
+D:\taskk\backend\src\Bazaar.Application\bin\Debug\net8.0\Bazaar.Application.dll
+D:\taskk\backend\src\Bazaar.Application\bin\Debug\net8.0\Bazaar.Application.pdb
+D:\taskk\backend\src\Bazaar.Application\bin\Debug\net8.0\Bazaar.Domain.dll
+D:\taskk\backend\src\Bazaar.Application\bin\Debug\net8.0\Bazaar.Domain.pdb
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.A.8FAA7F49.Up2Date
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.dll
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\refint\Bazaar.Application.dll
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\Bazaar.Application.pdb
+D:\taskk\backend\src\Bazaar.Application\obj\Debug\net8.0\ref\Bazaar.Application.dll

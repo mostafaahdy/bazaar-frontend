@@ -1,0 +1,17 @@
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Infrastructure.deps.json
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Infrastructure.dll
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Infrastructure.pdb
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Application.dll
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Domain.dll
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Domain.pdb
+D:\taskk\backend\src\Bazaar.Infrastructure\bin\Debug\net8.0\Bazaar.Application.pdb
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.csproj.AssemblyReference.cache
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.AssemblyInfoInputs.cache
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.AssemblyInfo.cs
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.csproj.CoreCompileInputs.cache
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.I.FEA662C5.Up2Date
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.dll
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\refint\Bazaar.Infrastructure.dll
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\Bazaar.Infrastructure.pdb
+D:\taskk\backend\src\Bazaar.Infrastructure\obj\Debug\net8.0\ref\Bazaar.Infrastructure.dll
