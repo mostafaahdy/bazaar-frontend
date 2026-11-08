@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Search, SlidersHorizontal, LayoutGrid, List, X, Star, Check,
@@ -108,13 +108,25 @@ export default function ProductCatalog({
     return availableBrands.filter(b => b.brand.toLowerCase().includes(brandSearch.toLowerCase()));
   }, [availableBrands, brandSearch]);
 
+  const resolveCategoryObject = useCallback((slug: string) => {
+    const canonical = slug === 'home' ? 'home-living' : slug === 'baby' ? 'baby-products' : slug === 'groceries' ? 'supermarket' : slug;
+    return categories.find(c => c.slug === slug || c.slug === canonical);
+  }, [categories]);
+
   // ─── Filter and Sort Logic ──────────────────────────────────────────
   const filteredProducts = useMemo(() => {
     return liveProducts.filter(product => {
       // 1. Category filter
       if (selectedCategory !== 'all') {
-        const cat = categories.find(c => c.slug === selectedCategory);
-        if (cat && product.categoryId !== cat.id && product.categoryName.toLowerCase() !== cat.name.toLowerCase()) return false;
+        const cat = resolveCategoryObject(selectedCategory);
+        if (cat) {
+          const matchesId = product.categoryId === cat.id;
+          const matchesName = product.categoryName.toLowerCase() === cat.name.toLowerCase();
+          const cleanCat = cat.name.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const cleanProd = product.categoryName.toLowerCase().replace(/[^a-z0-9]/g, '');
+          const matchesFuzzy = cleanCat.includes(cleanProd) || cleanProd.includes(cleanCat);
+          if (!matchesId && !matchesName && !matchesFuzzy) return false;
+        }
       }
 
       // 2. Search query filter
@@ -170,6 +182,7 @@ export default function ProductCatalog({
     expressOnly,
     discountOnly,
     sortBy,
+    resolveCategoryObject,
   ]);
 
   // Brand toggle handler
@@ -205,7 +218,7 @@ export default function ProductCatalog({
     return count;
   }, [selectedCategory, minPrice, maxPrice, selectedBrands, minRating, inStockOnly, expressOnly, discountOnly]);
 
-  const activeCategoryObject = categories.find(c => c.slug === selectedCategory);
+  const activeCategoryObject = resolveCategoryObject(selectedCategory);
 
   return (
     <div className="bg-zinc-50/60 dark:bg-zinc-950/50 min-h-screen py-6 md:py-8">

@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CartItem, WishlistItem, User, Currency, Order } from '@/lib/types';
+import type { CartItem, WishlistItem, Currency, Order } from '@/lib/types';
 
 // ─── Cart Store ────────────────────────────────────────────
 interface CartStore {
@@ -140,40 +140,7 @@ export const useWishlistStore = create<WishlistStore>()(
 );
 
 // ─── Auth Store ────────────────────────────────────────────
-interface AuthStore {
-  user: User | null;
-  isAuthOpen: boolean;
-  login: (email: string, name: string) => void;
-  logout: () => void;
-  openAuth: () => void;
-  closeAuth: () => void;
-}
-
-export const useAuthStore = create<AuthStore>()(
-  persist(
-    (set) => ({
-      user: null,
-      isAuthOpen: false,
-
-      login: (email, name) =>
-        set({
-          user: {
-            id: `user-${Date.now()}`,
-            email,
-            name,
-            isLoggedIn: true,
-            avatar: `https://api.dicebear.com/7.x/avataaars/svg?seed=${encodeURIComponent(email)}`,
-          },
-          isAuthOpen: false,
-        }),
-
-      logout: () => set({ user: null }),
-      openAuth: () => set({ isAuthOpen: true }),
-      closeAuth: () => set({ isAuthOpen: false }),
-    }),
-    { name: 'bazaar-auth' }
-  )
-);
+export { useAuthStore } from './store/useAuthStore';
 
 // ─── UI Store ─────────────────────────────────────────────
 interface UIStore {

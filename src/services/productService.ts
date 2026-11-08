@@ -185,10 +185,21 @@ export const productService = {
       // Fallback to local mock data
       let filtered = [...PRODUCTS];
       if (params?.categorySlug && params.categorySlug !== 'all') {
+        const target = params.categorySlug.toLowerCase();
         filtered = filtered.filter(
           (p) =>
-            p.categoryName.toLowerCase() === params.categorySlug?.toLowerCase() ||
-            p.categoryId === params.categorySlug
+            p.categoryName.toLowerCase() === target ||
+            p.categoryId === target ||
+            p.slug.toLowerCase().includes(target) ||
+            (target === 'home-living' && (p.categoryName.toLowerCase().includes('home') || p.categoryId === 'cat-7')) ||
+            (target === 'baby-products' && (p.categoryName.toLowerCase().includes('baby') || p.categoryId === 'cat-8')) ||
+            (target === 'supermarket' && (p.categoryName.toLowerCase().includes('supermarket') || p.categoryId === 'cat-9')) ||
+            (target === 'mobiles' && (p.categoryName.toLowerCase().includes('mobile') || p.categoryId === 'cat-1')) ||
+            (target === 'electronics' && (p.categoryName.toLowerCase().includes('electronic') || p.categoryId === 'cat-2')) ||
+            (target === 'computers' && (p.categoryName.toLowerCase().includes('computer') || p.categoryId === 'cat-3')) ||
+            (target === 'fashion' && (p.categoryName.toLowerCase().includes('fashion') || p.categoryId === 'cat-4')) ||
+            (target === 'appliances' && (p.categoryName.toLowerCase().includes('appliance') || p.categoryId === 'cat-5')) ||
+            (target === 'sports' && (p.categoryName.toLowerCase().includes('sport') || p.categoryId === 'cat-6'))
         );
       }
       if (params?.brand) {

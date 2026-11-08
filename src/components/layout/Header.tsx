@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import {
   Search, ShoppingCart, Heart, User, MapPin, ChevronDown,
   Globe, HelpCircle, Zap, Smartphone, Cpu, Monitor, Shirt,
@@ -39,6 +39,7 @@ const SEARCH_CATEGORIES = [
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [searchCategory, setSearchCategory] = useState('All Categories');
@@ -52,15 +53,16 @@ export default function Header() {
 
   const { totalItems, toggleCart } = useCartStore();
   const { items: wishlistItems } = useWishlistStore();
-  const { user, openAuth, logout } = useAuthStore();
+  const { user, openAuth, logout, initAuth } = useAuthStore();
   const { currency, deliveryLocation, setCurrency, setDeliveryLocation } = useUIStore();
 
   useEffect(() => {
     setMounted(true);
+    initAuth();
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [initAuth]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -439,19 +441,40 @@ export default function Header() {
           <ul className="flex items-center gap-1 overflow-x-auto hide-scrollbar h-11">
             {NAV_CATEGORIES.map(cat => {
               const Icon = cat.icon ? ICON_MAP[cat.icon] : null;
+              const isActive =
+                cat.href.startsWith('/category/')
+                  ? pathname === cat.href
+                  : cat.href.includes('category=flash-deals')
+                  ? pathname === '/category/flash-deals'
+                  : pathname === cat.href;
+
               return (
                 <li key={cat.href}>
                   <Link
                     href={cat.href}
                     className={`flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold transition-all duration-150 rounded-xl whitespace-nowrap relative group ${
-                      cat.highlight
-                        ? 'bg-gradient-to-r from-orange-500/10 to-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-900/50'
+                      isActive
+                        ? cat.highlight
+                          ? 'bg-rose-600 text-white shadow-md shadow-rose-600/30 font-bold'
+                          : 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30 font-bold'
+                        : cat.highlight
+                        ? 'bg-gradient-to-r from-orange-500/10 to-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-200/50 dark:border-rose-900/50 hover:bg-rose-500/20'
                         : 'text-zinc-600 dark:text-zinc-300 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                     }`}
                   >
-                    {Icon && <Icon className={`w-3.5 h-3.5 ${cat.highlight ? 'text-rose-500 fill-rose-500 animate-pulse' : 'text-zinc-400 group-hover:text-indigo-500'}`} />}
+                    {Icon && (
+                      <Icon
+                        className={`w-3.5 h-3.5 transition-colors ${
+                          isActive
+                            ? 'text-white'
+                            : cat.highlight
+                            ? 'text-rose-500 fill-rose-500 animate-pulse'
+                            : 'text-zinc-400 group-hover:text-indigo-500'
+                        }`}
+                      />
+                    )}
                     <span>{cat.label}</span>
-                    {cat.highlight && (
+                    {cat.highlight && !isActive && (
                       <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.2 bg-rose-500 text-white rounded-full">
                         Hot
                       </span>
@@ -462,9 +485,16 @@ export default function Header() {
             })}
 
             <li className="ml-auto flex items-center gap-4 text-xs font-semibold text-zinc-500">
-              <Link href="/seller" className="hover:text-indigo-600 transition-colors flex items-center gap-1">
+              <Link
+                href="/sell"
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl transition-all ${
+                  pathname === '/sell'
+                    ? 'bg-indigo-600 text-white font-bold shadow-sm shadow-indigo-600/25'
+                    : 'hover:text-indigo-600 dark:hover:text-indigo-400'
+                }`}
+              >
                 <span>Sell on Bazaar</span>
-                <span className="text-indigo-500">→</span>
+                <span className={pathname === '/sell' ? 'text-white font-bold' : 'text-indigo-500 font-bold'}>→</span>
               </Link>
             </li>
           </ul>
@@ -497,22 +527,51 @@ export default function Header() {
 
             <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">Shop Categories</p>
             <ul className="space-y-1">
-              {NAV_CATEGORIES.map(cat => (
-                <li key={cat.href}>
-                  <Link
-                    href={cat.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium ${
-                      cat.highlight
-                        ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold'
-                        : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800'
-                    }`}
-                  >
-                    <span>{cat.label}</span>
-                    {cat.highlight && <Zap className="w-4 h-4 fill-rose-500 text-rose-500" />}
-                  </Link>
-                </li>
-              ))}
+              {NAV_CATEGORIES.map(cat => {
+                const isActive =
+                  cat.href.startsWith('/category/')
+                    ? pathname === cat.href
+                    : cat.href.includes('category=flash-deals')
+                    ? pathname === '/category/flash-deals'
+                    : pathname === cat.href;
+
+                return (
+                  <li key={cat.href}>
+                    <Link
+                      href={cat.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
+                        isActive
+                          ? cat.highlight
+                            ? 'bg-rose-600 text-white font-bold'
+                            : 'bg-indigo-600 text-white font-bold'
+                          : cat.highlight
+                          ? 'bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400 font-bold'
+                          : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800'
+                      }`}
+                    >
+                      <span>{cat.label}</span>
+                      {cat.highlight && (
+                        <Zap className={`w-4 h-4 ${isActive ? 'fill-white text-white' : 'fill-rose-500 text-rose-500'}`} />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+              <li className="pt-2 border-t border-zinc-100 dark:border-zinc-800 mt-2">
+                <Link
+                  href="/sell"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-bold transition-all ${
+                    pathname === '/sell'
+                      ? 'bg-indigo-600 text-white'
+                      : 'text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-zinc-800'
+                  }`}
+                >
+                  <span>Sell on Bazaar</span>
+                  <span>→</span>
+                </Link>
+              </li>
             </ul>
           </div>
         </div>

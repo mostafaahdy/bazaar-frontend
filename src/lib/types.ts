@@ -115,6 +115,8 @@ export interface User {
   email: string;
   avatar?: string;
   isLoggedIn: boolean;
+  role?: string;
+  phoneNumber?: string;
 }
 
 export interface HeroBanner {
