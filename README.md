@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+ 🛒 Bazaar.eg - Enterprise Full-Stack E-Commerce Platform
 
-## Getting Started
+A modern, high-performance E-Commerce platform inspired by Amazon and Noon, engineered with a decoupled Full-Stack architecture adhering to Clean Architecture principles.
 
-First, run the development server:
+---
 
+ 🏗 System Architecture
+
+ Frontend (Client)
+- **Framework:** Next.js 14 (App Router) with TypeScript
+- **Styling:** Tailwind CSS & Lucide Icons
+- **State Management:** Zustand (Cart & Wishlist persistent stores)
+- **Core Modules:**
+  - Dynamic Mega-Header & Responsive Mobile Nav
+  - Homepage with Live Flash Deals & Countdown Timer
+  - Advanced Product Listing Page (PLP) with multi-criteria real-time filtering & sorting
+  - Interactive Product Details Page (PDP) with image gallery and variant selector
+  - Full Cart & Multi-Step Checkout Workflow with Order Tracking
+
+### Backend (Server & API)
+- Framework: ASP.NET Core (.NET 8 Web API)
+- Pattern: Clean Architecture (Domain, Application, Infrastructure, API)
+- Database & ORM: PostgreSQL with Entity Framework Core (Code-First)
+- Features:
+  - Automated Database Seeding (Categories, Products, Variants)
+  - CORS security & global error handling middleware (ProblemDetails RFC 7807)
+  - Rate limiting & robust domain modeling for financial accuracy (`decimal(18,2)`)
+
+---
+
+ Getting Started
+
+ 1. Backend Setup
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+cd backend
+dotnet restore
+dotnet run --project src/Bazaar.API
